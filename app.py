@@ -2,13 +2,18 @@ import os
 import gradio as gr
 from groq import Groq
 
-# API Key
+# ==============================
+# Groq API Key
+# ==============================
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_API_KEY:
     raise RuntimeError("GROQ_API_KEY not found")
 
 client = Groq(api_key=GROQ_API_KEY)
 
+# ==============================
+# Translation Function
+# ==============================
 def translate_english_to_urdu(text):
     if not text.strip():
         return "Please enter English text."
@@ -32,8 +37,9 @@ def translate_english_to_urdu(text):
 
     return response.choices[0].message.content.strip()
 
-
-# 🎨 Blue & White Theme
+# ==============================
+# Theme (Blue & White)
+# ==============================
 theme = gr.themes.Base(
     primary_hue="blue",
     secondary_hue="cyan",
@@ -42,16 +48,19 @@ theme = gr.themes.Base(
     font=["Inter", "system-ui", "sans-serif"],
 )
 
-# 🧱 UI Layout
+# ==============================
+# UI Layout
+# ==============================
 with gr.Blocks(theme=theme, css="""
 #title {
     text-align: center;
-    font-size: 2.3rem;
+    font-size: 2.4rem;
     font-weight: 700;
     color: #1e3a8a;
 }
 #subtitle {
     text-align: center;
+    font-size: 1.1rem;
     color: #4b5563;
     margin-bottom: 1.5rem;
 }
@@ -64,14 +73,14 @@ button.primary {
 }
 """) as demo:
 
-    gr.Markdown("<div id='title'>English → Urdu Translator</div>")
-    gr.Markdown("<div id='subtitle'>Fast & Accurate Translation using Groq AI</div>")
+    gr.Markdown("<div id='title'><b>English → Urdu Translator</b></div>")
+    gr.Markdown("<div id='subtitle'>Fast and Accurate Translator</div>")
 
     with gr.Row():
         with gr.Column():
             english_text = gr.Textbox(
                 label="English Text",
-                placeholder="Type English here...",
+                placeholder="Type English text here...",
                 lines=6
             )
         with gr.Column():
@@ -98,9 +107,12 @@ button.primary {
 
     gr.Markdown(
         "<center style='color:#6b7280;margin-top:1rem;'>"
-        "Powered by Groq • Built with Gradio"
+        "© English → Urdu Translator"
         "</center>"
     )
 
+# ==============================
+# Launch App
+# ==============================
 if __name__ == "__main__":
     demo.launch()
